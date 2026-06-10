@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#2D5A27;--g2:#4A7C3F;--gp:#E8F0E6;--bg:#F0EDE6;--bd:#D4CAB7;--tx:#2C2C2C;--tx2:#6B6B6B;--re:#C0392B;--wh:#fff}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);min-height:100vh;color:var(--tx);font-size:14px}
+.hdr{background:var(--g);color:#fff;padding:13px 20px;display:flex;align-items:center;gap:10px}
+.hdr-ic{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:7px;display:grid;place-items:center;font-size:17px;flex-shrink:0}
+.hdr h1{font-size:15px;font-weight:500;line-height:1.2}
+.hdr p{font-size:11px;opacity:.7}
+.wrap{max-width:660px;margin:0 auto;padding:22px 14px 40px}
+.land-hd{text-align:center;padding:6px 0 18px}
+.land-hd h2{font-size:19px;font-weight:500;color:var(--g)}
+.land-hd p{color:var(--tx2);margin-top:3px;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px}
+.card{background:var(--wh);border:2px solid var(--bd);border-radius:12px;padding:22px 14px;cursor:pointer;text-align:center;transition:.18s}
+.card:hover{border-color:var(--g2);background:var(--gp);transform:translateY(-2px);box-shadow:0 5px 16px rgba(45,90,39,.14)}
+.card .ic{font-size:34px;margin-bottom:8px}
+.card h3{font-size:14px;font-weight:500;color:var(--g);margin-bottom:4px}
+.card p{font-size:11px;color:var(--tx2);line-height:1.4}
+.f-hdr{background:var(--g);border-radius:12px 12px 0 0;padding:22px 20px;color:#fff;border-top:5px solid var(--g2)}
+.f-badge{display:inline-block;background:rgba(255,255,255,.18);border-radius:100px;padding:2px 11px;font-size:11px;font-weight:500;margin-bottom:9px}
+.f-hdr h2{font-size:17px;font-weight:500;margin-bottom:7px;line-height:1.35}
+.f-hdr p{font-size:12px;opacity:.82;line-height:1.65}
+.f-note{background:rgba(255,255,255,.12);border-radius:5px;padding:7px 11px;margin-top:10px;font-size:11px;opacity:.88}
+.q{background:var(--wh);padding:18px;margin-top:8px;border-radius:8px;border-left:4px solid transparent;transition:border-color .15s}
+.q.err{border-left-color:var(--re)}
+.q-lbl{font-size:13px;font-weight:500;margin-bottom:12px;line-height:1.5;color:var(--tx)}
+.req{color:var(--re)}
+.inp-t{width:100%;border:none;border-bottom:2px solid var(--bd);padding:7px 2px;font-size:14px;background:transparent;outline:none;color:var(--tx);font-family:inherit;transition:.2s}
+.inp-t:focus{border-bottom-color:var(--g)}
+.inp-ta{width:100%;border:1px solid var(--bd);border-radius:4px;padding:9px;font-size:14px;min-height:82px;resize:vertical;outline:none;color:var(--tx);font-family:inherit;transition:.2s}
+.inp-ta:focus{border-color:var(--g)}
+.opt{display:flex;align-items:flex-start;gap:9px;padding:6px 2px;cursor:pointer}
+.opt input{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--g);cursor:pointer}
+.opt-lbl{font-size:13px;line-height:1.4;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.inp-ot{border:none;border-bottom:1.5px solid var(--bd);font-size:13px;padding:2px 4px;margin-left:4px;width:min(260px,calc(100% - 60px));outline:none;color:var(--tx);background:transparent;transition:.2s}
+.inp-ot:focus{border-bottom-color:var(--g)}
+.mx-note{color:var(--tx2);font-size:11px;margin-top:7px;font-style:italic}
+.em{color:var(--re);font-size:11px;margin-top:5px;display:none}
+.em.show{display:block}
+.btn-row{padding:14px 0 2px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.btn{border:none;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:.18s}
+.btn-p{background:var(--g);color:#fff}
+.btn-p:hover{background:var(--g2)}
+.btn-o{background:transparent;color:var(--g);border:2px solid var(--g)}
+.btn-o:hover{background:var(--gp)}
+.btn-sm{padding:7px 16px;font-size:12px}
+.ty{background:var(--wh);border-radius:12px;padding:44px 26px;text-align:center}
+.ty .ic{font-size:54px;margin-bottom:14px}
+.ty h2{font-size:20px;color:var(--g);font-weight:500;margin-bottom:7px}
+.ty p{color:var(--tx2);margin-bottom:22px;line-height:1.6;font-size:13px}
+.resp-banner{background:var(--wh);border-radius:8px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.resp-count{font-size:12px;color:var(--tx2)}
+.resp-count b{color:var(--g)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-ic">🌿</div>
+  <div>
+    <h1>The Phyll Connect</h1>
+    <p>สุขุมวิท 54 · BTS อ่อนนุช ทางออก 4</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="pg-land">
+    <div class="land-hd">
+      <h2>แบบสอบถามความคิดเห็น</h2>
+      <p>กรุณาเลือกประเภทบริการที่ต้องการทำแบบสอบถาม</p>
+    </div>
+    <div id="resp-info" class="hidden resp-banner">
+      <span class="resp-count" id="resp-text"></span>
+      <button class="btn btn-o btn-sm" onclick="viewResults()">ดูผลตอบ</button>
+    </div>
+    <div class="cards">
+      <div class="card" onclick="go('cw')">
+        <div class="ic">💻</div>
+        <h3>Co-Working Space</h3>
+        <p>พื้นที่ทำงานร่วมกัน</p>
+      </div>
+      <div class="card" onclick="go('mr')">
+        <div class="ic">📋</div>
+        <h3>Meeting Room</h3>
+        <p>ห้องประชุม</p>
+      </div>
+      <div class="card" onclick="go('po')">
+        <div class="ic">🏢</div>
+        <h3>Private Office</h3>
+        <p>สำนักงานส่วนตัว</p>
+      </div>
+    </div>
+  </div>
+  <div id="pg-survey" class="hidden"></div>
+  <div id="pg-ty" class="hidden">
+    <div class="ty">
+      <div class="ic">✅</div>
+      <h2>ขอบคุณมากค่ะ!</h2>
+      <p>ได้รับคำตอบของคุณเรียบร้อยแล้ว<br>ข้อมูลจะถูกนำไปพัฒนาการบริการให้ดียิ่งขึ้น</p>
+      <button class="btn btn-p" onclick="pg('pg-land')">← ทำแบบสอบถามอื่น</button>
+    </div>
+  </div>
+  <div id="pg-results" class="hidden"></div>
+</div>
+
+<script>
+/* ── localStorage helper (ใช้งานได้โดยไม่ต้องมี Claude) ── */
+const Store={
+  set(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}},
+  get(k){const v=localStorage.getItem(k);return v?{value:v}:null;},
+  del(k){localStorage.removeItem(k);},
+  list(prefix){
+    const keys=[];
+    for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))keys.push(k);}
+    return{keys};
+  }
+};
+
+const D={
+  cw:{
+    label:'💻 Co-Working Space',
+    title:'แบบสอบถามความคิดเห็นเกี่ยวกับ Co-Working Space\n[Survey on opinions regarding co-working spaces]',
+    desc:'แบบสอบถามนี้จัดทำขึ้นเพื่อสำรวจความคิดเห็นและความต้องการของผู้ใช้บริการและผู้ที่สนใจ Co-Working Space ของ The Phyll Connect\nข้อมูลที่ได้รับจะนำไปใช้ในการพัฒนาพื้นที่ สิ่งอำนวยความสะดวก และการบริการให้ตอบโจทย์การทำงานของผู้ใช้งานมากยิ่งขึ้น',
+    qs:[
+      {id:'name',t:'txt',l:'ชื่อ-นามสกุล [First and last name]',r:1},
+      {id:'age',t:'r',l:'ช่วงอายุ [Age range]',r:1,o:['ต่ำกว่า 18 ปี','18 - 24 ปี','25 - 34 ปี','35 - 44 ปี','45 ปีขึ้นไป']},
+      {id:'use',t:'r',l:'สถานะการใช้บริการ [Service Usage Status]',r:1,o:['เคยใช้ Co-Working Space ที่ The Phyll Connect','เคยใช้ที่อื่น แต่ยังไม่เคยใช้ที่นี่','ยังไม่เคยใช้ Co-Working Space']},
+      {id:'fac',t:'c',l:'ปัจจัยที่สำคัญที่สุดในการเลือก Co-Working Space (เลือกได้มากกว่า 1 ข้อ)\n[Most important factors when selecting a Co-Working Space]',r:1,o:['ใกล้ BTS / เดินทางสะดวก','ราคา [Price]','อินเทอร์เน็ต [Internet]','ความเงียบ / บรรยากาศ [Silence / Atmosphere]','สิ่งอำนวยความสะดวก [Facilities]'],ot:1},
+      {id:'prom',t:'r',l:'โปรโมชั่นแบบใดทำให้คุณตัดสินใจใช้ Co-Working Space ได้ง่ายขึ้น\n[What kind of promotion makes it easier for you to decide?]',r:1,o:['ลดราคา % [Discount %]','ช่วงเวลาราคาพิเศษ [Special price period]']},
+      {id:'vouch',t:'c',l:'Gift voucher ใดเหมาะกับ Co-Working Space มากที่สุด (เลือกได้มากกว่า 1 ข้อ)\n[Which gift voucher is best suited?]',r:1,o:['ชั่วโมงใช้งานฟรี [Free hours]','เพิ่มวันใช้งานในแพ็กเกจ [Add more days to your package]','ส่วนลดครั้งถัดไป [Next discount]'],ot:1},
+      {id:'act',t:'c',l:'คุณยินดีทำกิจกรรมใดเพื่อแลกรับสิทธิพิเศษ (เลือกได้มากกว่า 1 ข้อ)\n[Which activities would you be willing to participate in to receive special privileges?]',r:1,o:['รีวิว Co-Working Space [Review of Co-Working Space]','แนะนำเพื่อน [Refer a friend]','แชร์ Social Media [Share Social Media]','ไม่สะดวกทำกิจกรรมแลก [Not convenient to do exchange activities]'],ot:1},
+      {id:'pkg',t:'r',l:'แพ็กเกจที่คุณสนใจมากที่สุด [The package you are most interested in]',r:1,o:['First 2 hrs.','1-Day pass','5-Day Pass','1 Month','6 Month','1 Year']},
+      {id:'ch',t:'c',l:'ช่องทางที่คุณได้รับข่าวสารเกี่ยวกับ The Phyll Connect (เลือกได้มากกว่า 1 ข้อ)\n[How did you receive information about The Phyll Connect?]',r:1,o:['Line','Facebook','Instagram','Tiktok','ป้ายหน้าร้าน','เว็บไซต์'],ot:1},
+    ]
+  },
+  mr:{
+    label:'📋 Meeting Room',
+    title:'แบบสอบถามความคิดเห็นเกี่ยวกับห้องประชุม\n[Survey on feedback regarding the meeting room]',
+    desc:'แบบสอบถามนี้จัดทำขึ้นเพื่อสำรวจความคิดเห็นและความต้องการของผู้ใช้บริการและผู้ที่สนใจห้องประชุม (Meeting Room) ของ The Phyll Connect สุขุมวิท 54 (BTS อ่อนนุช ทางออก 4)\nข้อมูลที่ได้รับจะนำไปใช้เพื่อพัฒนาพื้นที่และการบริการให้ตรงกับความต้องการมากยิ่งขึ้น',
+    qs:[
+      {id:'name',t:'txt',l:'ชื่อ - นามสกุล [First name & Last Name]',r:1},
+      {id:'age',t:'r',l:'ช่วงอายุของคุณ [Age range]',r:1,o:['ต่ำกว่า 25 ปี','25 - 34 ปี','35 - 44 ปี','45 ปีขึ้นไป']},
+      {id:'use',t:'r',l:'สถานะการใช้ห้องประชุม [Meeting room usage status]',r:1,o:['เคยใช้ห้องประชุมที่นี่ The Phyll Connect','เคยใช้ห้องประชุมที่อื่น แต่ยังไม่เคยใช้ที่นี่','ยังไม่เคยใช้ห้องประชุม']},
+      {id:'purp',t:'r',l:'วัตถุประสงค์ในการใช้ห้องประชุม (หรือคาดว่าจะใช้)\n[Purpose of using the meeting room (or expected use)]',r:1,o:['ประชุมงาน [Work meeting]','นำเสนองาน [Presentation]','สัมภาษณ์งาน [Job interview]','อบรม / Workshop [Training/Workshop]'],ot:1},
+      {id:'fac',t:'c',l:'ปัจจัยสำคัญในการเลือกใช้ห้องประชุม (เลือกได้มากกว่า 1 ข้อ)\n[Key factors in choosing a meeting room]',r:1,o:['ราคา [Price]','ทำเลใกล้ BTS [Location near BTS]','ความเป็นส่วนตัว [Privacy]','อุปกรณ์ครบ [Complete equipment]','อินเทอร์เน็ต [Internet]','บรรยากาศ [Atmosphere]'],ot:1},
+      {id:'prom',t:'r',l:'โปรโมชั่นแบบใดทำให้คุณตัดสินใจจองห้องประชุมได้ง่ายขึ้น\n[What kind of promotion makes it easier for you to decide to book?]',r:1,o:['ส่วนลด / โปรโมชั่น การใช้ห้องประชุม [Discounts / Promotions]','จองหลายชั่วโมง ราคาถูกลง [Book several hours, cheaper price]','ส่วนลดร้านอาหารและเครื่องดื่ม ในเครือ [Discounts on food and beverages]']},
+      {id:'vouch',t:'c',l:'Gift voucher ที่คุณสนใจมากที่สุด (เลือกได้มากกว่า 1 ข้อ)\n[Gift vouchers that interest you the most]',r:1,o:['ชั่วโมงใช้งานฟรี [Free hours]','ใช้พื้นที่ Co-Working Space ต่อได้ [Continue using the co-working space]','ส่วนลดการจองครั้งถัดไป [Discount on your next booking]','เครื่องดื่ม / อาหารว่าง [Drinks/Snacks]'],ot:1},
+      {id:'ch',t:'c',l:'ช่องทางที่คุณได้รับข่าวสารเกี่ยวกับห้องประชุม The Phyll Connect (เลือกได้มากกว่า 1 ข้อ)\n[How did you receive information?]',r:1,o:['Line','Facebook','Instagram','Tiktok','ป้ายหน้าร้าน','เว็บไซต์','เดินเข้ามาสอบถาม'],ot:1},
+      {id:'dec',t:'r',l:'ปัจจัยที่ทำให้คุณตัดสินใจจองห้องประชุมมากที่สุด\n[What factors influence your decision to book a meeting room the most?]',r:1,o:['ห้องว่างตามเวลาที่ต้องการ [Room available at desired time]','ราคาและโปรโมชั่น [Prices and promotions]','ทำเลใกล้ BTS อ่อนนุช [Convenient location near BTS On Nut]','อุปกรณ์ครบ พร้อมใช้งาน [Complete equipment, ready to use]'],ot:1},
+      {id:'sug',t:'ta',l:'ข้อเสนอแนะสำหรับห้องประชุม The Phyll Connect\n[What is the most recommended for the meeting room at The Phyll Connect?]',r:0},
+    ]
+  },
+  po:{
+    label:'🏢 Private Office',
+    title:'แบบสอบถามความคิดเห็นเกี่ยวกับ Private Office\n[Survey of opinions regarding private offices]',
+    desc:'แบบสอบถามนี้จัดทำขึ้นเพื่อสำรวจความคิดเห็นและความต้องการของผู้ใช้บริการและผู้ที่สนใจ Private Office ของ The Phyll Connect สุขุมวิท 54 BTS อ่อนนุช ทางออก 4\nข้อมูลที่ได้รับจะนำไปใช้ในการพัฒนาพื้นที่ สิ่งอำนวยความสะดวก และการบริการ เพื่อให้เหมาะสมกับการทำงานที่ต้องการความเป็นส่วนตัวและประสิทธิภาพสูง',
+    qs:[
+      {id:'name',t:'txt',l:'ชื่อ - นามสกุล [First name & Last name]',r:1},
+      {id:'stat',t:'r',l:'สถานะของคุณเกี่ยวกับการเช่าสำนักงาน [Your status regarding office rental]',r:1,o:['เช่าสำนักงานครั้งแรก [First office rental]','ยังไม่เคยเช่าสำนักงาน [Never rented an office]','ย้ายมาจากสำนักงานอื่น [Moved from another office]']},
+      {id:'fac',t:'c',l:'ปัจจัยใดมีผลต่อการตัดสินใจเลือกเช่าสำนักงานมากที่สุด (เลือกได้ไม่เกิน 3 ข้อ)\n[Which factors have the greatest influence? (Select up to 3 options)]',r:1,mx:3,o:['ราคา [Price]','ทำเลที่ตั้ง [Location]','ขนาดพื้นที่ [Area size]','สิ่งอำนวยความสะดวก [Facilities]','ความยืดหยุ่นของสัญญา [Contract flexibility]','ภาพลักษณ์และความน่าเชื่อถือของสำนักงาน [Image and credibility]']},
+      {id:'pimp',t:'r',l:'ระดับความสำคัญของราคา ในการตัดสินใจเช่าสำนักงาน\n[The importance of price in decisions about renting office space]',r:1,o:['สำคัญมาก [Very important]','ค่อนข้างสำคัญ [Quite important]','ปานกลาง [Moderate]','ไม่ค่อยสำคัญ [Not very important]','ไม่สำคัญ [Unimportant]']},
+      {id:'loc',t:'r',l:'ทำเลลักษณะใดที่คุณสนใจมากที่สุด [What type of location interests you the most?]',r:1,o:['ใจกลางเมือง [City center]','ใกล้ระบบขนส่งสาธารณะ [Near public transportation]','นอกเมือง / ชานเมือง [Outside the city / Suburbs]','มีแหล่งรับประทานอาหารใกล้เคียง [There are eating places nearby]'],ot:1},
+      {id:'am',t:'c',l:'สิ่งอำนวยความสะดวกใดที่คุณให้ความสำคัญ (เลือกได้มากกว่า 1 ข้อ)\n[Which amenities do you value most?]',r:1,o:['อินเทอร์เน็ตความเร็วสูง [High speed internet]','ห้องประชุม [Meeting room]','ที่จอดรถ [Parking]','พื้นที่ส่วนกลาง [Common area]','ระบบรักษาความปลอดภัย [Security system]'],ot:1},
+      {id:'why',t:'r',l:'เหตุผลหลักที่อาจทำให้ ไม่เลือก เช่าสำนักงาน\n[The main reasons that might lead someone to not choose to rent an office space]',r:1,o:['ราคาไม่เหมาะสม [The price is not appropriate]','ยังไม่จำเป็น [Not necessary yet]','ทำเลไม่ตรงความต้องการ [Location does not meet my needs]','ทำงานที่บ้านได้ [Can work at home]','เงื่อนไขสัญญาไม่ยืดหยุ่น [The contract terms are inflexible]']},
+      {id:'sug',t:'ta',l:'ข้อเสนอแนะสำหรับ Private Office ของ The Phyll Connect\n[What is the most recommended for the Private Office at The Phyll Connect?]',r:0},
+    ]
+  }
+};
+
+let cur=null;
+
+function pg(id){
+  ['pg-land','pg-survey','pg-ty','pg-results'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));
+  window.scrollTo(0,0);
+}
+
+function esc(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
+function renderQ(q){
+  const req=q.r?'<span class="req"> *</span>':'';
+  let inner='';
+  if(q.t==='txt') inner=`<input class="inp-t" type="text" id="f_${q.id}" placeholder="ข้อความคำตอบสั้นๆ">`;
+  else if(q.t==='ta') inner=`<textarea class="inp-ta" id="f_${q.id}" placeholder="ข้อความคำตอบแบบยาว..."></textarea>`;
+  else if(q.t==='r'){
+    inner=(q.o||[]).map(o=>`<label class="opt"><input type="radio" name="f_${q.id}" value="${esc(o)}"><span class="opt-lbl">${o}</span></label>`).join('');
+    if(q.ot) inner+=`<label class="opt"><input type="radio" name="f_${q.id}" value="__ot__" id="or_${q.id}"><span class="opt-lbl">อื่นๆ: <input class="inp-ot" type="text" id="ot_${q.id}" placeholder="โปรดระบุ" onfocus="document.getElementById('or_${q.id}').checked=true"></span></label>`;
+  } else if(q.t==='c'){
+    inner=(q.o||[]).map(o=>`<label class="opt"><input type="checkbox" name="f_${q.id}" value="${esc(o)}"><span class="opt-lbl">${o}</span></label>`).join('');
+    if(q.ot) inner+=`<label class="opt"><input type="checkbox" name="f_${q.id}" value="__ot__" id="oc_${q.id}"><span class="opt-lbl">อื่นๆ: <input class="inp-ot" type="text" id="ot_${q.id}" placeholder="โปรดระบุ" onfocus="document.getElementById('oc_${q.id}').checked=true"></span></label>`;
+    if(q.mx) inner+=`<div class="mx-note">*เลือกได้ไม่เกิน ${q.mx} ข้อ (Select up to ${q.mx})</div>`;
+  }
+  return `<div class="q" id="qc_${q.id}"><div class="q-lbl">${q.l.replace(/\n/g,'<br>')}${req}</div>${inner}<div class="em" id="em_${q.id}">กรุณาตอบคำถามนี้ / This field is required</div></div>`;
+}
+
+function go(type){
+  cur=type;
+  const s=D[type];
+  let h=`<div class="f-hdr"><div class="f-badge">${s.label}</div><h2>${s.title.replace(/\n/g,'<br>')}</h2><p>${s.desc.replace(/\n/g,'<br>')}</p><div class="f-note">* หมายถึง จำเป็นต้องตอบ &nbsp;(Required fields)</div></div>`;
+  s.qs.forEach(q=>{h+=renderQ(q);});
+  h+=`<div class="q"><div class="btn-row"><button class="btn btn-o" onclick="pg('pg-land')">← ย้อนกลับ</button><button class="btn btn-p" onclick="submitForm()">ส่งแบบสอบถาม →</button></div></div>`;
+  const el=document.getElementById('pg-survey');
+  el.innerHTML=h;
+  pg('pg-survey');
+  if(type==='po'){
+    document.querySelectorAll('[name="f_fac"]').forEach(cb=>{
+      cb.addEventListener('change',()=>{
+        const n=document.querySelectorAll('[name="f_fac"]:checked').length;
+        if(n>3) cb.checked=false;
+      });
+    });
+  }
+}
+
+function getVal(q){
+  if(q.t==='txt'||q.t==='ta') return(document.getElementById('f_'+q.id)||{}).value?.trim()||'';
+  if(q.t==='r'){
+    const c=document.querySelector('[name="f_'+q.id+'"]:checked');
+    if(!c) return null;
+    return c.value==='__ot__'?'อื่นๆ: '+((document.getElementById('ot_'+q.id)||{}).value||''):c.value;
+  }
+  if(q.t==='c'){
+    const cs=document.querySelectorAll('[name="f_'+q.id+'"]:checked');
+    return Array.from(cs).map(c=>c.value==='__ot__'?'อื่นๆ: '+((document.getElementById('ot_'+q.id)||{}).value||''):c.value);
+  }
+  return null;
+}
+
+function submitForm(){
+  const s=D[cur]; let ok=true;
+  const ans={survey:cur,label:D[cur].label,ts:new Date().toISOString(),data:{}};
+  for(const q of s.qs){
+    const v=getVal(q),empty=!v||(Array.isArray(v)&&!v.length)||v==='';
+    const card=document.getElementById('qc_'+q.id),em=document.getElementById('em_'+q.id);
+    if(q.r&&empty){ok=false;card.classList.add('err');em.classList.add('show');}
+    else{card.classList.remove('err');em.classList.remove('show');}
+    ans.data[q.id]=v;
+  }
+  if(!ok){document.querySelector('.q.err')?.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  Store.set('resp:'+cur+':'+Date.now(),JSON.stringify(ans));
+  pg('pg-ty');
+  const _urlType=new URLSearchParams(location.search).get('type');
+if(_urlType&&D[_urlType]) go(_urlType);
+loadRespCount();
+}
+
+function loadAllData(){
+  const {keys}=Store.list('resp:');
+  const byType={cw:[],mr:[],po:[]};
+  for(const k of keys){
+    try{const r=Store.get(k);if(r){const d=JSON.parse(r.value);d._key=k;byType[d.survey]?.push(d);}}catch(e){}
+  }
+  return{keys,byType};
+}
+
+function loadRespCount(){
+  const {keys,byType}=loadAllData();
+  if(!keys.length){document.getElementById('resp-info').classList.add('hidden');return;}
+  const c={cw:byType.cw.length,mr:byType.mr.length,po:byType.po.length};
+  document.getElementById('resp-text').innerHTML=`การตอบทั้งหมด: <b>${keys.length}</b> ครั้ง (Co-Working: ${c.cw}, Meeting Room: ${c.mr}, Private Office: ${c.po})`;
+  document.getElementById('resp-info').classList.remove('hidden');
+}
+
+function clearType(type){
+  const labels={cw:'Co-Working Space',mr:'Meeting Room',po:'Private Office',all:'ทั้งหมด'};
+  if(!confirm(`ยืนยันการลบข้อมูล ${labels[type]}?\nการกระทำนี้ไม่สามารถยกเลิกได้`)) return;
+  const {keys,byType}=loadAllData();
+  const toDel=type==='all'?keys:(byType[type]||[]).map(r=>r._key);
+  toDel.forEach(k=>Store.del(k));
+  viewResults();loadRespCount();
+}
+
+function deleteOne(key){
+  if(!confirm('ลบรายการนี้?')) return;
+  Store.del(key);
+  viewRaw();loadRespCount();
+}
+
+function viewResults(){
+  const {keys,byType}=loadAllData();
+  const labels={cw:'💻 Co-Working Space',mr:'📋 Meeting Room',po:'🏢 Private Office'};
+  let h=`<div style="background:var(--wh);border-radius:12px;padding:16px 18px;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <h2 style="font-size:16px;font-weight:500;color:var(--g)">ผลสรุปแบบสอบถาม</h2>
+      <button class="btn btn-o btn-sm" onclick="pg('pg-land')">← กลับ</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center">
+      <span style="font-size:12px;color:var(--tx2)">จัดการข้อมูล:</span>
+      <button class="btn btn-sm" style="background:var(--gp);color:var(--g);border:1px solid var(--g2)" onclick="viewRaw()">📋 ดูรายการทั้งหมด</button>
+      <button class="btn btn-sm" style="background:#fff3f3;color:#c0392b;border:1px solid #e8b4b4" onclick="clearType('cw')">🗑 ล้าง CW</button>
+      <button class="btn btn-sm" style="background:#fff3f3;color:#c0392b;border:1px solid #e8b4b4" onclick="clearType('mr')">🗑 ล้าง MR</button>
+      <button class="btn btn-sm" style="background:#fff3f3;color:#c0392b;border:1px solid #e8b4b4" onclick="clearType('po')">🗑 ล้าง PO</button>
+      <button class="btn btn-sm" style="background:#c0392b;color:#fff;border:none" onclick="clearType('all')">🗑 ล้างทั้งหมด</button>
+    </div>
+  </div>`;
+  if(!keys.length){
+    h+=`<div class="ty" style="padding:30px"><p>ยังไม่มีข้อมูลการตอบแบบสอบถาม</p></div>`;
+    document.getElementById('pg-results').innerHTML=h;pg('pg-results');return;
+  }
+  for(const [type,resps] of Object.entries(byType)){
+    if(!resps.length) continue;
+    h+=`<div style="background:var(--wh);border-radius:8px;padding:18px;margin-bottom:8px"><div style="font-size:14px;font-weight:500;color:var(--g);margin-bottom:12px">${labels[type]} — ${resps.length} การตอบ</div>`;
+    const s=D[type];
+    for(const q of s.qs){
+      if(q.t==='txt'||q.t==='ta') continue;
+      const tally={};
+      resps.forEach(r=>{const v=r.data[q.id];if(Array.isArray(v)){v.forEach(x=>{tally[x]=(tally[x]||0)+1;});}else if(v){tally[v]=(tally[v]||0)+1;}});
+      if(!Object.keys(tally).length) continue;
+      const sorted=Object.entries(tally).sort((a,b)=>b[1]-a[1]);
+      h+=`<div style="margin-bottom:14px"><div style="font-size:12px;color:var(--tx2);margin-bottom:6px;font-style:italic">${q.l.split('\n')[0]}</div>`;
+      sorted.forEach(([k,v])=>{
+        const pct=Math.round(v/resps.length*100);
+        h+=`<div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>${k}</span><span style="color:var(--tx2)">${v} (${pct}%)</span></div><div style="background:var(--bg);border-radius:3px;height:6px"><div style="background:var(--g);height:6px;border-radius:3px;width:${pct}%"></div></div></div>`;
+      });
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  }
+  document.getElementById('pg-results').innerHTML=h;pg('pg-results');
+}
+
+function viewRaw(){
+  const {byType}=loadAllData();
+  const labels={cw:'💻 Co-Working Space',mr:'📋 Meeting Room',po:'🏢 Private Office'};
+  let h=`<div style="background:var(--wh);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+    <h2 style="font-size:16px;font-weight:500;color:var(--g)">รายการตอบแบบสอบถาม</h2>
+    <button class="btn btn-o btn-sm" onclick="viewResults()">← กลับสรุป</button>
+  </div>`;
+  let hasAny=false;
+  for(const [type,resps] of Object.entries(byType)){
+    if(!resps.length) continue;
+    hasAny=true;
+    h+=`<div style="background:var(--wh);border-radius:8px;padding:18px;margin-bottom:8px"><div style="font-size:14px;font-weight:500;color:var(--g);margin-bottom:10px">${labels[type]}</div>`;
+    const s=D[type];
+    resps.forEach((r,i)=>{
+      const dt=new Date(r.ts).toLocaleString('th-TH');
+      const nm=r.data.name||'-';
+      h+=`<div style="border:1px solid var(--bd);border-radius:7px;padding:12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-size:13px;font-weight:500">${i+1}. ${nm}</span>
+          <span style="display:flex;gap:6px;align-items:center">
+            <span style="font-size:11px;color:var(--tx2)">${dt}</span>
+            <button class="btn btn-sm" style="background:#fff3f3;color:#c0392b;border:1px solid #e8b4b4;padding:3px 9px;font-size:11px" onclick="deleteOne('${r._key}')">ลบ</button>
+          </span>
+        </div>`;
+      s.qs.forEach(q=>{
+        const v=r.data[q.id];
+        if(!v||(Array.isArray(v)&&!v.length)) return;
+        const disp=Array.isArray(v)?v.join(', '):v;
+        h+=`<div style="margin-bottom:4px;font-size:12px"><span style="color:var(--tx2)">${q.l.split('\n')[0]}:</span> <span>${disp}</span></div>`;
+      });
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  if(!hasAny) h+=`<div class="ty" style="padding:30px"><p>ยังไม่มีข้อมูล</p></div>`;
+  document.getElementById('pg-results').innerHTML=h;pg('pg-results');
+}
+
+loadRespCount();
+</script>
+</body>
+</html>
