@@ -172,6 +172,13 @@ const D={
   }
 };
 
+/* ── ☁️ Cloud Sync Config ──
+   วาง URL ของ Google Apps Script Web App ตรงนี้ หลัง deploy แล้ว
+   ถ้าเว้นว่างไว้ จะเก็บเฉพาะใน browser (localStorage) เท่านั้น */
+const CONFIG={
+  CLOUD_URL:'https://script.google.com/macros/s/AKfycbyvP4zTIDJx8Jgo5SmR1zIv3cf9NsRw8Nr1EuA13KOOdsDeiNwjkaMBJC9xVhfqAVMYMg/exec' // <-- ใส่ Apps Script URL ที่นี่ เช่น 'https://script.google.com/macros/s/AKfyc.../exec'
+};
+
 let cur=null;
 
 function pg(id){
